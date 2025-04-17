@@ -39,9 +39,7 @@ const Navbar: React.FC = () => {
           <Link to="/community" className="text-sm font-medium text-muted-foreground hover:text-foreground">
             Community
           </Link>
-          <Link to="/globe" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-            Globe
-          </Link>
+          
         </div>
 
         <div className="flex items-center gap-2">
