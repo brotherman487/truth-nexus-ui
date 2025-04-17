@@ -1,16 +1,29 @@
 
-import { useState } from "react";
 import { Moon, Bell, Lock, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { ProfileData } from "@/hooks/useProfile";
+import { useToast } from "@/hooks/use-toast";
 
-const SettingsPanel = () => {
-  const [darkMode, setDarkMode] = useState(true);
-  const [notifications, setNotifications] = useState(true);
-  const [profilePrivacy, setProfilePrivacy] = useState(false);
-  const [scanHistory, setScanHistory] = useState(true);
+interface SettingsPanelProps {
+  profile: ProfileData;
+  updateProfile: (data: Partial<ProfileData>) => void;
+}
+
+const SettingsPanel = ({ profile, updateProfile }: SettingsPanelProps) => {
+  const { toast } = useToast();
+
+  const handleSettingChange = (setting: keyof ProfileData, value: boolean) => {
+    updateProfile({ [setting]: value });
+    
+    // Show toast notification
+    toast({
+      title: "Setting updated",
+      description: `Your preference has been saved.`,
+    });
+  };
 
   return (
     <Card className="glass-card">
@@ -30,8 +43,8 @@ const SettingsPanel = () => {
               </Label>
               <Switch
                 id="dark-mode"
-                checked={darkMode}
-                onCheckedChange={setDarkMode}
+                checked={profile.darkMode}
+                onCheckedChange={(checked) => handleSettingChange("darkMode", checked)}
               />
             </div>
           </div>
@@ -49,8 +62,8 @@ const SettingsPanel = () => {
               </Label>
               <Switch
                 id="notifications"
-                checked={notifications}
-                onCheckedChange={setNotifications}
+                checked={profile.notifications}
+                onCheckedChange={(checked) => handleSettingChange("notifications", checked)}
               />
             </div>
           </div>
@@ -68,8 +81,8 @@ const SettingsPanel = () => {
               </Label>
               <Switch
                 id="profile-privacy"
-                checked={profilePrivacy}
-                onCheckedChange={setProfilePrivacy}
+                checked={profile.profilePrivacy}
+                onCheckedChange={(checked) => handleSettingChange("profilePrivacy", checked)}
               />
             </div>
             <div className="flex items-center justify-between">
@@ -78,8 +91,8 @@ const SettingsPanel = () => {
               </Label>
               <Switch
                 id="scan-history"
-                checked={scanHistory}
-                onCheckedChange={setScanHistory}
+                checked={profile.scanHistory}
+                onCheckedChange={(checked) => handleSettingChange("scanHistory", checked)}
               />
             </div>
           </div>
