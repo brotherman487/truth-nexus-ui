@@ -1,11 +1,13 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, Moon, Search, User, Sun } from "lucide-react";
+import { Bell, Moon, Search, User, Sun, MessageCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ProfileSidebar from "@/components/profile/ProfileSidebar";
 import { useProfile } from "@/hooks/useProfile";
 import { useDarkMode } from "@/hooks/useDarkMode";
+
 const Navbar: React.FC = () => {
   const [profileSidebarOpen, setProfileSidebarOpen] = useState(false);
   const {
@@ -18,6 +20,7 @@ const Navbar: React.FC = () => {
     darkMode,
     toggleDarkMode
   } = useDarkMode();
+  
   return <>
       <header className="sticky top-0 z-50 w-full flex items-center justify-between py-3 px-4 md:px-6 backdrop-blur-lg bg-background/70 border-b border-border">
         <div className="flex items-center gap-2">
@@ -49,6 +52,16 @@ const Navbar: React.FC = () => {
               3
             </Badge>
           </Button>
+          
+          <Button variant="ghost" size="icon" className="relative" asChild>
+            <Link to="/community?tab=messages">
+              <MessageCircle size={20} />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center bg-primary text-xs">
+                5
+              </Badge>
+            </Link>
+          </Button>
+          
           <Button variant="ghost" size="icon">
             <Search size={20} />
           </Button>
@@ -65,4 +78,5 @@ const Navbar: React.FC = () => {
       <ProfileSidebar profile={profile} updateProfile={updateProfile} isOpen={profileSidebarOpen} onOpenChange={setProfileSidebarOpen} isEditing={isEditing} toggleEditMode={toggleEditMode} />
     </>;
 };
+
 export default Navbar;
