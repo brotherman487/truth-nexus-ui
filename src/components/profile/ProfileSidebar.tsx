@@ -103,16 +103,8 @@ const ProfileSidebar = ({
           <div className="p-4 pt-2">
             <div className="space-y-6">
               <div className="space-y-4">
-                <h3 className="text-sm font-medium flex items-center gap-2">
-                  <User size={16} /> 
-                  <span>Appearance</span>
-                </h3>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="dark-mode" className="text-muted-foreground">
-                    Dark Mode
-                  </Label>
-                  <Switch id="dark-mode" checked={darkMode} onCheckedChange={checked => handleSettingChange("darkMode", checked)} />
-                </div>
+                
+                
               </div>
 
               <Separator />
