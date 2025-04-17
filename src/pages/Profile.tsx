@@ -1,41 +1,22 @@
 
-import { useState } from "react";
+import { useEffect } from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import ProfileHeader from "@/components/profile/ProfileHeader";
-import EditProfileForm from "@/components/profile/EditProfileForm";
-import ContributionHistory from "@/components/profile/ContributionHistory";
-import SettingsPanel from "@/components/profile/SettingsPanel";
 import { useProfile } from "@/hooks/useProfile";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const { profile, updateProfile, isEditing, toggleEditMode } = useProfile();
+  const { profile } = useProfile();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Redirect users to the dashboard, as profile is now accessed via the sidebar
+    navigate('/dashboard');
+  }, [navigate]);
   
   return (
     <AppLayout>
       <div className="container py-6">
-        <h1 className="text-2xl font-bold mb-6 gradient-text">My Profile</h1>
-        
-        {isEditing ? (
-          <EditProfileForm 
-            profile={profile} 
-            onSave={(data) => {
-              updateProfile(data);
-              toggleEditMode();
-            }}
-            onCancel={toggleEditMode}
-          />
-        ) : (
-          <ProfileHeader 
-            profile={profile} 
-            onEdit={toggleEditMode}
-          />
-        )}
-        
-        <ContributionHistory />
-        <SettingsPanel 
-          profile={profile}
-          updateProfile={updateProfile} 
-        />
+        <h1 className="text-2xl font-bold mb-6 gradient-text">Redirecting to Dashboard...</h1>
       </div>
     </AppLayout>
   );
