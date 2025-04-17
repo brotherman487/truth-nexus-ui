@@ -1,4 +1,3 @@
-
 import React from "react";
 import { X, User, Flag, Settings as SettingsIcon } from "lucide-react";
 import { ProfileData } from "@/hooks/useProfile";
@@ -11,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import EditProfileForm from "./EditProfileForm";
 import { useToast } from "@/hooks/use-toast";
 import { useDarkMode } from "@/hooks/useDarkMode";
-
 interface ProfileSidebarProps {
   profile: ProfileData;
   updateProfile: (data: Partial<ProfileData>) => void;
@@ -20,50 +18,44 @@ interface ProfileSidebarProps {
   isEditing: boolean;
   toggleEditMode: () => void;
 }
-
 const ProfileSidebar = ({
   profile,
   updateProfile,
   isOpen,
   onOpenChange,
   isEditing,
-  toggleEditMode,
+  toggleEditMode
 }: ProfileSidebarProps) => {
-  const { toast } = useToast();
-  const { darkMode, toggleDarkMode } = useDarkMode();
-
+  const {
+    toast
+  } = useToast();
+  const {
+    darkMode,
+    toggleDarkMode
+  } = useDarkMode();
   const handleSettingChange = (setting: keyof ProfileData, value: boolean) => {
     // For darkMode specifically, use our dark mode context
     if (setting === 'darkMode') {
       toggleDarkMode();
     }
-    
-    updateProfile({ [setting]: value });
-    
+    updateProfile({
+      [setting]: value
+    });
     toast({
       title: "Setting updated",
-      description: `Your preference has been saved.`,
+      description: `Your preference has been saved.`
     });
   };
-
-  return (
-    <Sheet open={isOpen} onOpenChange={onOpenChange}>
+  return <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent className="overflow-y-auto">
         <SheetHeader className="mb-6">
           <SheetTitle className="text-2xl font-bold gradient-text">My Profile</SheetTitle>
         </SheetHeader>
         
-        {isEditing ? (
-          <EditProfileForm 
-            profile={profile} 
-            onSave={(data) => {
-              updateProfile(data);
-              toggleEditMode();
-            }}
-            onCancel={toggleEditMode}
-          />
-        ) : (
-          <div className="glass-card p-6 mb-6">
+        {isEditing ? <EditProfileForm profile={profile} onSave={data => {
+        updateProfile(data);
+        toggleEditMode();
+      }} onCancel={toggleEditMode} /> : <div className="glass-card p-6 mb-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
                 <div className="w-20 h-20 rounded-full bg-gradient-to-r from-clarity-blue to-clarity-purple flex items-center justify-center shadow-glow-md">
@@ -72,7 +64,7 @@ const ProfileSidebar = ({
                 <div>
                   <h1 className="text-2xl font-bold">{profile.name}</h1>
                   <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="bg-accent/20 text-accent">
+                    <Badge variant="outline" className="text-accent rounded bg-amber-400">
                       Truth Seeker
                     </Badge>
                     <div className="flex items-center gap-1 text-sm">
@@ -102,8 +94,7 @@ const ProfileSidebar = ({
                 <p className="text-sm text-muted-foreground">Global Rank</p>
               </div>
             </div>
-          </div>
-        )}
+          </div>}
         
         <div className="glass-card">
           <div className="p-4 pb-2">
@@ -120,11 +111,7 @@ const ProfileSidebar = ({
                   <Label htmlFor="dark-mode" className="text-muted-foreground">
                     Dark Mode
                   </Label>
-                  <Switch
-                    id="dark-mode"
-                    checked={darkMode}
-                    onCheckedChange={(checked) => handleSettingChange("darkMode", checked)}
-                  />
+                  <Switch id="dark-mode" checked={darkMode} onCheckedChange={checked => handleSettingChange("darkMode", checked)} />
                 </div>
               </div>
 
@@ -139,11 +126,7 @@ const ProfileSidebar = ({
                   <Label htmlFor="notifications" className="text-muted-foreground">
                     Push Notifications
                   </Label>
-                  <Switch
-                    id="notifications"
-                    checked={profile.notifications}
-                    onCheckedChange={(checked) => handleSettingChange("notifications", checked)}
-                  />
+                  <Switch id="notifications" checked={profile.notifications} onCheckedChange={checked => handleSettingChange("notifications", checked)} />
                 </div>
               </div>
 
@@ -158,29 +141,19 @@ const ProfileSidebar = ({
                   <Label htmlFor="profile-privacy" className="text-muted-foreground">
                     Private Profile
                   </Label>
-                  <Switch
-                    id="profile-privacy"
-                    checked={profile.profilePrivacy}
-                    onCheckedChange={(checked) => handleSettingChange("profilePrivacy", checked)}
-                  />
+                  <Switch id="profile-privacy" checked={profile.profilePrivacy} onCheckedChange={checked => handleSettingChange("profilePrivacy", checked)} />
                 </div>
                 <div className="flex items-center justify-between">
                   <Label htmlFor="scan-history" className="text-muted-foreground">
                     Public Scan History
                   </Label>
-                  <Switch
-                    id="scan-history"
-                    checked={profile.scanHistory}
-                    onCheckedChange={(checked) => handleSettingChange("scanHistory", checked)}
-                  />
+                  <Switch id="scan-history" checked={profile.scanHistory} onCheckedChange={checked => handleSettingChange("scanHistory", checked)} />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </SheetContent>
-    </Sheet>
-  );
+    </Sheet>;
 };
-
 export default ProfileSidebar;
