@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Trophy, ArrowRight } from "lucide-react";
+import { Trophy, ArrowRight, User } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
